@@ -722,6 +722,12 @@ describe('MockOnchainAdapter', () => {
   });
 
   describe('batchRevoke and batchRefund', () => {
+    const ADMIN_ADDRESS =
+      'GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF';
+    const RECIPIENT_ADDRESS =
+      'GBUQWP3BOUZX34ULNQG23RQ6F4BFXWBTRSE53XSTE23JMCVOCJGXVSVZ';
+    const TOKEN_ADDRESS = MOCK_TOKEN_ADDRESS;
+
     it('batchRevoke: fully-successful batch where all packages are Created', async () => {
       await adapter.createAidPackage({
         operatorAddress: ADMIN_ADDRESS,
