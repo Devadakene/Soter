@@ -121,7 +121,9 @@ describe('AidEscrowController - batch operations', () => {
         'admin-address',
       );
       expect(response).toEqual(mockResult);
-      expect(response.results.every((r: any) => r.status === 'Success')).toBe(true);
+      expect(response.results.every((r: any) => r.status === 'Success')).toBe(
+        true,
+      );
     });
 
     it('returns per-id BatchAdminActionResult for a batch with rejected IDs', async () => {

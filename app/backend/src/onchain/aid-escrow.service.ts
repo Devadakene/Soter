@@ -639,7 +639,7 @@ export class AidEscrowService {
     dto: BatchAdminActionDto,
     adminAddress: string,
   ): Promise<BatchAdminOperationResult & { explorerUrl?: string }> {
-    this.logger.debug("Batch revoking packages:", {
+    this.logger.debug('Batch revoking packages:', {
       ids: dto.ids,
       admin: adminAddress,
     });
@@ -660,10 +660,7 @@ export class AidEscrowService {
       );
     }
 
-    const result = await this.onchainAdapter.batchRevoke(
-      dto.ids,
-      adminAddress,
-    );
+    const result = await this.onchainAdapter.batchRevoke(dto.ids, adminAddress);
 
     if (this.auditService) {
       await this.auditService.record({
@@ -689,7 +686,7 @@ export class AidEscrowService {
     dto: BatchAdminActionDto,
     adminAddress: string,
   ): Promise<BatchAdminOperationResult & { explorerUrl?: string }> {
-    this.logger.debug("Batch refunding packages:", {
+    this.logger.debug('Batch refunding packages:', {
       ids: dto.ids,
       admin: adminAddress,
     });
@@ -710,10 +707,7 @@ export class AidEscrowService {
       );
     }
 
-    const result = await this.onchainAdapter.batchRefund(
-      dto.ids,
-      adminAddress,
-    );
+    const result = await this.onchainAdapter.batchRefund(dto.ids, adminAddress);
 
     if (this.auditService) {
       await this.auditService.record({

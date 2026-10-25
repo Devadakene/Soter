@@ -1104,15 +1104,11 @@ export class MockOnchainAdapter implements OnchainAdapter {
   ): Promise<BatchAdminOperationResult> {
     await Promise.resolve();
     if (ids.length > 25) {
-      throw new AppException(
-        ERROR_CODES.BAD_REQUEST,
-        400,
-        'BatchTooLarge',
-      );
+      throw new AppException(ERROR_CODES.BAD_REQUEST, 400, 'BatchTooLarge');
     }
 
     const transactionHash = this.generateMockHash(
-      "batch-revoke-" + ids.join(",") + "-" + Date.now(),
+      'batch-revoke-' + ids.join(',') + '-' + Date.now(),
     );
 
     const results: BatchAdminActionResult[] = ids.map(id => {
@@ -1161,15 +1157,11 @@ export class MockOnchainAdapter implements OnchainAdapter {
     await Promise.resolve();
     this.assertActionNotPaused('refund');
     if (ids.length > 25) {
-      throw new AppException(
-        ERROR_CODES.BAD_REQUEST,
-        400,
-        'BatchTooLarge',
-      );
+      throw new AppException(ERROR_CODES.BAD_REQUEST, 400, 'BatchTooLarge');
     }
 
     const transactionHash = this.generateMockHash(
-      "batch-refund-" + ids.join(",") + "-" + Date.now(),
+      'batch-refund-' + ids.join(',') + '-' + Date.now(),
     );
 
     const nowSec = Math.floor(Date.now() / 1000);

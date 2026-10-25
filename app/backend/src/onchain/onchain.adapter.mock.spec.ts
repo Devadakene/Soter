@@ -719,7 +719,6 @@ describe('MockOnchainAdapter', () => {
       expect(result.history[1].newDelegate).toBe(DELEGATE2);
       expect(result.history[1].previousDelegate).toBe(DELEGATE_ADDRESS);
     });
-    });
   });
 
   describe('batchRevoke and batchRefund', () => {
@@ -794,7 +793,7 @@ describe('MockOnchainAdapter', () => {
     });
 
     it('batchRevoke: rejects batches exceeding maximum limit', async () => {
-      const overLimitIds = Array.from({ length: 26 }, (_, i) => pkg-721);
+      const overLimitIds = Array.from({ length: 26 }, (_, i) => `pkg-${i}`);
       await expect(adapter.batchRevoke(overLimitIds)).rejects.toThrow(
         'BatchTooLarge',
       );
@@ -850,7 +849,10 @@ describe('MockOnchainAdapter', () => {
         expiresAt: futureTime,
       });
 
-      const res = await adapter.batchRefund(['refund-live', 'non-existent-refund']);
+      const res = await adapter.batchRefund([
+        'refund-live',
+        'non-existent-refund',
+      ]);
       expect(res.status).toBe('success');
       expect(res.results).toEqual([
         { packageId: 'refund-live', status: 'NotExpired', amount: '0' },
