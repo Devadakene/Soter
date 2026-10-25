@@ -110,10 +110,7 @@ class PIIScrubberService:
     ]
 
     def __init__(self):
-        try:
-            self.nlp = self._build_nlp()
-        except Exception:
-            self.nlp = None
+        self.nlp = self._build_nlp()
         self.test_provider = TestProvider()
 
     def anonymize(self, text: str) -> Dict[str, object]:
