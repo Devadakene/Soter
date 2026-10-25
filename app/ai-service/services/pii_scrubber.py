@@ -354,78 +354,81 @@ class PIIScrubberService:
         if spacy is None:
             return None
 
-        nlp = spacy.blank("en")
-        ruler = nlp.add_pipe("entity_ruler")
-        ruler.add_patterns(
-            [
-                {
-                    "label": "PERSON",
-                    "pattern": [
-                        {"LOWER": {"IN": ["mr", "mrs", "ms", "miss", "dr", "prof"]}},
-                        {"IS_TITLE": True},
-                        {"IS_TITLE": True, "OP": "?"},
-                    ],
-                },
-                {
-                    "label": "PERSON",
-                    "pattern": [
-                        {"IS_TITLE": True},
-                        {"IS_TITLE": True},
-                    ],
-                },
-                {
-                    "label": "LOCATION",
-                    "pattern": [
-                        {"LOWER": {"IN": ["in", "at", "from", "near"]}},
-                        {"IS_TITLE": True},
-                        {"IS_TITLE": True, "OP": "?"},
-                        {"IS_TITLE": True, "OP": "?"},
-                        {
-                            "LOWER": {
-                                "IN": [
-                                    "camp",
-                                    "state",
-                                    "region",
-                                    "district",
-                                    "city",
-                                    "village",
-                                ]
+        try:
+            nlp = spacy.blank("en")
+            ruler = nlp.add_pipe("entity_ruler")
+            ruler.add_patterns(
+                [
+                    {
+                        "label": "PERSON",
+                        "pattern": [
+                            {"LOWER": {"IN": ["mr", "mrs", "ms", "miss", "dr", "prof"]}},
+                            {"IS_TITLE": True},
+                            {"IS_TITLE": True, "OP": "?"},
+                        ],
+                    },
+                    {
+                        "label": "PERSON",
+                        "pattern": [
+                            {"IS_TITLE": True},
+                            {"IS_TITLE": True},
+                        ],
+                    },
+                    {
+                        "label": "LOCATION",
+                        "pattern": [
+                            {"LOWER": {"IN": ["in", "at", "from", "near"]}},
+                            {"IS_TITLE": True},
+                            {"IS_TITLE": True, "OP": "?"},
+                            {"IS_TITLE": True, "OP": "?"},
+                            {
+                                "LOWER": {
+                                    "IN": [
+                                        "camp",
+                                        "state",
+                                        "region",
+                                        "district",
+                                        "city",
+                                        "village",
+                                    ]
+                                },
+                                "OP": "?",
                             },
-                            "OP": "?",
-                        },
-                    ],
-                },
-                {"label": "DATE", "pattern": [{"SHAPE": "dd/dd/dddd"}]},
-                {"label": "DATE", "pattern": [{"SHAPE": "dd-dd-dddd"}]},
-                {
-                    "label": "DATE",
-                    "pattern": [
-                        {"IS_DIGIT": True},
-                        {
-                            "LOWER": {
-                                "IN": [
-                                    "jan",
-                                    "feb",
-                                    "mar",
-                                    "apr",
-                                    "may",
-                                    "jun",
-                                    "jul",
-                                    "aug",
-                                    "sep",
-                                    "sept",
-                                    "oct",
-                                    "nov",
-                                    "dec",
-                                ]
-                            }
-                        },
-                        {"IS_DIGIT": True},
-                    ],
-                },
-            ]
-        )
-        return nlp
+                        ],
+                    },
+                    {"label": "DATE", "pattern": [{"SHAPE": "dd/dd/dddd"}]},
+                    {"label": "DATE", "pattern": [{"SHAPE": "dd-dd-dddd"}]},
+                    {
+                        "label": "DATE",
+                        "pattern": [
+                            {"IS_DIGIT": True},
+                            {
+                                "LOWER": {
+                                    "IN": [
+                                        "jan",
+                                        "feb",
+                                        "mar",
+                                        "apr",
+                                        "may",
+                                        "jun",
+                                        "jul",
+                                        "aug",
+                                        "sep",
+                                        "sept",
+                                        "oct",
+                                        "nov",
+                                        "dec",
+                                    ]
+                                }
+                            },
+                            {"IS_DIGIT": True},
+                        ],
+                    },
+                ]
+            )
+            return nlp
+        except Exception:
+            return None
 
     def _detect_spans(self, text: str) -> List[PIISpan]:
         spans: List[PIISpan] = []

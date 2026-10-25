@@ -88,7 +88,11 @@ metrics.check_system_resources = lambda **kwargs: True
 @pytest.fixture(autouse=True)
 def reset_app_state():
     """Ensure app state is clean before each test to prevent interference."""
-    from main import app
+    try:
+        from main import app
+    except Exception:
+        yield
+        return
 
     # Ensure app state is initialized
     if not hasattr(app.state, "is_shutting_down"):
