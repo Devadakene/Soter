@@ -80,6 +80,7 @@ class PIIScrubberService:
     DATE_REGEXES = [
         r"\b\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b",
         r"\b\d{4}[/-]\d{1,2}[/-]\d{1,2}\b",
+        r"\b\d{1,2}\.\d{1,2}\.\d{4}\b",
         r"\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\s+\d{1,2},?\s+\d{4}\b",
         r"\b\d{1,2}\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)[a-z]*\s+\d{4}\b",
     ]
@@ -110,7 +111,10 @@ class PIIScrubberService:
     ]
 
     def __init__(self):
-        self.nlp = self._build_nlp()
+        try:
+            self.nlp = self._build_nlp()
+        except Exception:
+            self.nlp = None
         self.test_provider = TestProvider()
 
     def anonymize(self, text: str) -> Dict[str, object]:
